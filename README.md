@@ -7,13 +7,12 @@ downloaded if changed.
 This software comes with no guarantees. I use this personally, but I probably will not
 implement feature requests, or possibly even bug fixes. YMMV.
 
-Beware: This script deletes unmanaged files in the output directory. Don't accidentally
-nuke your system drive by accident. I'd highly recommend running this in docker to prevent
-accidents.
+Beware: This script deletes unmanaged files in the output directory. Don't
+nuke your system drive by accident.
 
 ## How to run
 
-### With Docker
+### With Docker (HIGHLY RECOMMENDED)
 ```
 docker run --rm \
   -v "$PWD:/app" \
