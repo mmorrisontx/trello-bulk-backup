@@ -17,5 +17,5 @@ Node 16 required
 
 ```
 npm install
-KEY=trellokey TOKEN=trellotoken DATA_DIR=path/to/output node index
+KEY=trellokey TOKEN=trellotoken DATA_DIR=path/to/output node main
 ```
