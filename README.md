@@ -13,8 +13,24 @@ accidents.
 
 ## How to run
 
-Node 16 required
+### With Docker
+```
+docker run --rm \
+  -v "$PWD:/app" \
+  -w "/app" \
+  node:16 npm install
+docker run --rm \
+  -v "$PWD:/app:ro" \
+  -v "$PWD/data:/data" \
+  -w "/app" \
+  -e "KEY=mytrellokey" \
+  -e "TOKEN=mytrellotoken" \
+  -e "DATA_DIR=/data" \
+  node:16 node main
+```
 
+### Without Docker
+(NodeJS 16 Required)
 ```
 npm install
 KEY=trellokey TOKEN=trellotoken DATA_DIR=path/to/output node main
