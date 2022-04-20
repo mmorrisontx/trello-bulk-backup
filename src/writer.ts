@@ -1,15 +1,17 @@
 import plainFs from 'node:fs';
 import fs from 'node:fs/promises';
 import Path from 'node:path';
-import Util from './util.js';
+import Util from './util';
 import Stream from 'node:stream/promises';
 
 export default class Writer {
+    managed;
+
     constructor() {
         this.managed = new Set();
     }
 
-    async writeJson(path, data) {
+    async writeJson(path: string, data: any) {
         const absPath = Path.resolve(path);
         this.managed.add(absPath);
 
@@ -25,7 +27,7 @@ export default class Writer {
         return true;
     }
 
-    async writeMarker(dir, name) {
+    async writeMarker(dir: string, name: string) {
         const absPath = Path.resolve(dir, "_ " + Util.cleanFilename(name));
         this.managed.add(absPath);
 
@@ -34,7 +36,7 @@ export default class Writer {
         } catch(e) {}
     }
 
-    async writeStream(path, inStream) {
+    async writeStream(path: string, inStream: NodeJS.ReadableStream) {
         const absPath = Path.resolve(path);
         this.managed.add(absPath);
 
@@ -44,14 +46,14 @@ export default class Writer {
         )
     }
 
-    async size(path) {
+    async size(path: string) {
         const absPath = Path.resolve(path);
         this.managed.add(absPath);
 
         try {
             const stat = await fs.stat(absPath);
             return stat.size;
-        } catch(e) {
+        } catch(e: any) {
             if (e.code === 'ENOENT') {
                 return -1;
             }
@@ -59,15 +61,15 @@ export default class Writer {
         }
     }
 
-    async clean(root) {
+    async clean(root: string) {
         console.log("Running cleaner ...");
-        const cleanDir = async (dir) => {
+        const cleanDir = async (dir: string) => {
             const entries = await fs.readdir(dir, {withFileTypes: true});
             let isEmpty = true;
             for (const entry of entries) {
                 const entryPath = Path.resolve(dir, entry.name);
                 if (entry.isDirectory()) {
-                    isEmpty &= await cleanDir(entryPath);
+                    isEmpty = isEmpty && await cleanDir(entryPath);
                 } else if (this.managed.has(entryPath)) {
                     isEmpty = false;
                 } else {

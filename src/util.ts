@@ -1,23 +1,23 @@
 import fs from 'fs/promises';
 import got from 'got';
 
-const KEY = process.env.KEY;
-const TOKEN = process.env.TOKEN;
+const KEY = process.env['KEY'];
+const TOKEN = process.env['TOKEN'];
 
 export default class Util {
-    static async mkdir(path) {
+    static async mkdir(path: string) {
         await fs.mkdir(path, {recursive: true});
     }
 
-    static toJson(data) {
+    static toJson(data: any) {
         return JSON.stringify(data, null, 4);
     }
 
-    static cleanFilename(name) {
+    static cleanFilename(name: string) {
         return name.replace(/[^\w\s.()\-]/gi, '');
     }
 
-    static async getAllCards(boardId, before) {
+    static async getAllCards(boardId: string, before: string | undefined = undefined): Promise<any[]> {
         const cards = await this.get('boards/' + boardId + '/cards/all', {
             attachments: 1,
             checkItemStates: 1,
@@ -39,7 +39,7 @@ export default class Util {
         return [...cards, ...nextCards];
     }
 
-    static async get(path, params={}) {
+    static async get(path: string, params={}): Promise<any> {
         return got.get('https://api.trello.com/1/' + path, {
             searchParams: params,
             headers: {
@@ -48,7 +48,7 @@ export default class Util {
         }).json();
     }
 
-    static download(url, params={}) {
+    static download(url: string, params={}) {
         return got.stream(url, {
             searchParams: params,
             headers: {

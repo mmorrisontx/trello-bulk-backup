@@ -25,12 +25,12 @@ docker run --rm \
   -e "KEY=mytrellokey" \
   -e "TOKEN=mytrellotoken" \
   -e "DATA_DIR=/data" \
-  node:16 node main
+  node:16 npm start
 ```
 
 ### Without Docker
 (NodeJS 16 Required)
 ```
 npm install
-KEY=trellokey TOKEN=trellotoken DATA_DIR=path/to/output node main
+KEY=trellokey TOKEN=trellotoken DATA_DIR=path/to/output npm start
 ```

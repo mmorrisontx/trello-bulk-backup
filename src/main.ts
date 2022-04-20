@@ -1,8 +1,12 @@
 import path from 'path';
-import Util from './util.js';
-import Writer from './writer.js';
+import Util from './util';
+import Writer from './writer';
 
-const ROOT = process.env.DATA_DIR || 'data';
+console.log('');
+console.log('--- starting ---');
+console.log('');
+
+const ROOT = process.env['DATA_DIR'] || 'data';
 
 const writer = new Writer();
 
